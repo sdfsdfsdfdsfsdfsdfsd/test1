@@ -1,7 +1,9 @@
 FROM alpine:latest
 
-RUN apk add --no-cache microsocks
+RUN apk add --no-cache 3proxy
+
+COPY 3proxy.cfg /etc/3proxy.cfg
 
 EXPOSE 1080
 
-CMD ["microsocks", "-p", "1080"]
+CMD ["3proxy", "/etc/3proxy.cfg"]
