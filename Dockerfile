@@ -1,11 +1,12 @@
-FROM debian:stable-slim
+FROM alpine:latest
 
-RUN apt update && \
-    apt install -y 3proxy && \
-    apt clean
+RUN apk add --no-cache build-base git
 
-COPY 3proxy.cfg /etc/3proxy.cfg
+RUN git clone https://github.com/rofl0r/microsocks.git /microsocks && \
+    cd /microsocks && \
+    make && \
+    cp microsocks /usr/local/bin/microsocks
 
 EXPOSE 1080
 
-CMD ["3proxy", "/etc/3proxy.cfg"]
+CMD ["microsocks", "-p", "1080"]
